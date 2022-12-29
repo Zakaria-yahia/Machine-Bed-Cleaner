@@ -1,0 +1,32 @@
+﻿/*
+ * EXTERNAL_ENTERRUPT.c
+ *
+ * Created: 21/12/2022 11:11:58 م
+ *  Author: Electronica Care
+ */ 
+#include "EXTERNAL_ENTERRUPT.h"
+void (*EXTERNAL_ENTERRUPT0_isr)(void);
+void (*EXTERNAL_ENTERRUPT1_isr)(void);
+void EXTERNAL_ENTERRUPT_init(void){
+	CLRBIT (DDRD, 3);
+	SETBIT (PORTD, 3);
+	CLRBIT (DDRD, 2);
+	SETBIT (PORTD, 2);
+	//SETBIT(MCUCR,ISC00);
+	//SETBIT(MCUCR,ISC10);
+	SETBIT(MCUCR,ISC11);
+	SETBIT(MCUCR,ISC01);
+	SETBIT(GICR,6);
+	SETBIT(GICR,7);
+	SETBIT(SREG, 7);
+	
+}
+
+
+ISR(INT0_vect){
+	EXTERNAL_ENTERRUPT0_isr();
+}
+
+ISR(INT1_vect){
+	EXTERNAL_ENTERRUPT1_isr();
+}
